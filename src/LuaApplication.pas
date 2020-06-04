@@ -286,7 +286,7 @@ begin
       lua_newtable(L);
       for i:=0 to luaScript.Count-1 do begin
           lua_pushnumber(L, i + 1);
-          lua_pushstring(L, luaScript.Strings[i]);
+          lua_pushstring(L, PChar(luaScript.Strings[i]));
           lua_rawset(L,-3);
       end;
       identList.Free;

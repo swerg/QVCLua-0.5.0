@@ -846,7 +846,7 @@ begin
     lua_pushliteral(LL,'Bottom');
     lua_pushnumber(LL,Rect.Bottom);    
     lua_rawset(LL,-3);    
-    lua_pushString(LL,DrawGridStateToString(State));
+    lua_pushString(LL,PChar(DrawGridStateToString(State)));
     DoCall(LL,5);
     end;
 end;

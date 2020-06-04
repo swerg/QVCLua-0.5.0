@@ -32,7 +32,7 @@ end;
 procedure ListBoxToTable(L:Plua_State; Index:Integer; Sender:TObject);
 begin
   SetDefaultMethods(L,Index,Sender);
-  SetStringListMethods(L,Index,Sender);
+  SetStringList3Methods(L,Index,Sender);
   
   {$IFDEF HASCANVAS}
   if (Sender.InheritsFrom(TCustomControl) or Sender.InheritsFrom(TGraphicControl) or

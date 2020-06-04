@@ -1,5 +1,7 @@
 unit LuaPas;
 
+{$DEFINE USEQLUA}
+
 (*
  * A complete Pascal wrapper for Lua 5.1 DLL module.
  *
@@ -18,11 +20,15 @@ type
   Plua_State = ^lua_State;
 
 const
+{$IFDEF USEQLUA}
+  LuaDLL = 'qlua.dll';
+{$ELSE}
 {$IFDEF WIN32}
   LuaDLL = 'lua5.1.dll';
 {$ELSE}
   LuaDLL = 'lua5.1.so';
-{$endif}
+{$ENDIF}
+{$ENDIF}
 
 (*****************************************************************************)
 (*                               luaconfig.h                                 *)

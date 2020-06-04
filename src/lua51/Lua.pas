@@ -16,7 +16,7 @@ const
 
 function RunSeparate(L: Plua_State):integer;cdecl;
 
-procedure LuaError(L: Plua_State; text: String);
+procedure LuaError(L: Plua_State; text: String; err:String='');
 procedure DoScript(L: Plua_State; fileName: String);
 procedure DoCall(L: Plua_State; paramCount:integer);
 
@@ -32,7 +32,9 @@ procedure LuaSetTableClear(L: Plua_State; TableIndex: Integer);
 
 procedure LuaPushKeyString(L: Plua_State; var Index: Integer; const Key: string);
 function LuaAbsIndex(L: Plua_State; Index: Integer): Integer;
-procedure CheckArg(L: Plua_State; N: Integer);
+///QVCL change start
+function CheckArg(L: Plua_State; N: Integer; const FuncContextName: String=''): Boolean;
+///QVCL change end
 
 procedure LuaRawSetTableNil(L: Plua_State; TableIndex: Integer; const Key: string);
 procedure LuaRawSetTableBoolean(L: Plua_State; TableIndex: Integer; const Key: string; B: Boolean);
@@ -129,23 +131,26 @@ end;
 
 // *****************************************************************************
 
-procedure LuaError(L: Plua_State; text: String);
+procedure LuaError(L: Plua_State; text: String; err:String='');
 Var s:String;
 begin
+     if (err <> '') then begin
+        text := text + '(' + err + ')';
+     end;
      lua_gettop(L);
      try
         s := lua_tostring(L,-1);
         if Assigned(Application) and (Application.MainForm<>nil) then begin
-           Application.Minimize;
-           ShowMessage('LUA Error:'+#10#13+s+#10#13+text);
+///QVCL           Application.Minimize;
+           ShowMessage('Lua Error:'+#10#13+s+#10#13+text)
         end;
      finally
      end;
-     // writeln(text + ' ' + s);
-     if Assigned(Application) then
-        Application.Terminate
-     else
-        Halt(1);
+///QVCL     writeln(text + ' ' + s);
+///QVCL     if Assigned(Application) then
+///QVCL        Application.Terminate
+///QVCL     else
+///QVCL     Halt(-1);
 end;
 
 procedure DoScript(L: Plua_State; fileName: String);
@@ -258,11 +263,22 @@ begin
   lua_pushstring(L, PChar(Key));
 end;
 
-procedure CheckArg(L: Plua_State; N: Integer);
+///QVCL change start
+function CheckArg(L: Plua_State; N: Integer; const FuncContextName: String=''): Boolean;
+var
+  ParamNum: Integer;
 begin
-  if (lua_gettop(L) <> N) then
-    LuaError(L, 'BAD parameter call!');
+  ParamNum := lua_gettop(L);
+  if (ParamNum <> N) then
+  begin
+    LuaError(L,
+             'BAD parameter call in "' + FuncContextName + '"! ParamNum:' + IntToStr(ParamNum) + ', require:' + IntToStr(N));
+    Result := False;
+  end
+  else
+    Result := True;
 end;
+///QVCL change end
 
 procedure LuaRawSetTableFunction(L: Plua_State; TableIndex: Integer; const Key: string; F: lua_CFunction);
 begin

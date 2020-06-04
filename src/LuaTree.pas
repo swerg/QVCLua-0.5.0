@@ -1,8 +1,10 @@
 unit LuaTree;
 
+{$mode Delphi}{$H+}
+
 interface
 
-Uses LuaPas,LuaControl,ComCtrls,Controls,Classes,Types,LuaCanvas, DOM;
+Uses LuaPas,LuaControl,ComCtrls,Controls,Classes,Types,LuaCanvas, DOM,  lazutf8;
 
 function CreateTreeView(L: Plua_State): Integer; cdecl;
 
@@ -25,6 +27,11 @@ procedure TreeNodeToTable(L:Plua_State; Index:Integer; Sender:TObject);
 implementation
 
 Uses Forms, SysUtils, Lua, LuaImageList, LuaProperties, fileutil, XMLRead;
+
+procedure lua_pushstring(L : Plua_State; const s : WideString); overload;
+begin
+  lua_pushstring(L, PChar(UTF16toUTF8(s)));
+end;
 
 // **************************************************************
 
@@ -261,7 +268,7 @@ function GetDOMNode(L: Plua_State): Integer; cdecl;
 var
   lTree:TLuaTreeView;
   Node:TDOMNode;
-  s:WideString;
+//  s:WideString;
   n:integer;
 
 function DOMnodetotable(TTN:TDOMNode):Integer;

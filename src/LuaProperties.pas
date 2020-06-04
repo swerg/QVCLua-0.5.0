@@ -264,14 +264,16 @@ begin
                    else
      	              SetOrdProp(Comp, PInfo, Trunc(lua_tonumber(L, index)));
            end;
+///QVCL change start
 	tkChar, tkWChar:
           begin
-            Str := lua_tostring(L, index);
+            Str := AnsiToUTF8(lua_tostring(L, index));
             if length(Str)<1 then
               SetOrdProp(Comp, PInfo, 0)
             else
               SetOrdProp(Comp, PInfo, Ord(Str[1]));
           end;
+///QVCL change end
         tkBool:
                begin
 		    // writeln(PInfo^.Name, lua_toboolean(L,index)); 
@@ -294,20 +296,25 @@ begin
         tkFloat:
 	      	SetFloatProp(Comp, PInfo, lua_tonumber(L, index));
 
+///QVCL change start
         tkString, tkLString, tkWString:
-	      	SetStrProp(Comp, PInfo, lua_tostring(L, index));
+                begin
+                    Str := lua_tostring(L, index);
+                    SetStrProp(Comp, PInfo, AnsiToUtf8(Str));
+                end;
 
         tkInt64: begin
 	      	SetInt64Prop(Comp, PInfo, Int64(Round(lua_tonumber(L, index))));
                 end;
      else begin
-               Str := lua_tostring(L, index);
+               Str := AnsiToUtf8(lua_tostring(L, index));
                if (PInfo^.Proptype^.Name='TTranslateString') then
 		    SetStrProp(Comp, PInfo, Str )
                else if (PInfo^.Proptype^.Name='AnsiString') then
 		    SetStrProp(Comp, PInfo, Str)
 	       else if (PInfo^.Proptype^.Name='WideString') then
 		    SetStrProp(Comp, PInfo, Str)
+///QVCL change end
                else
 		    LuaError(L,'Property not supported!' , PInfo^.Proptype^.Name);
 	    end;

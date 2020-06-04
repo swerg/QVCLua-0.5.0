@@ -32,7 +32,7 @@ end;
 procedure MemoToTable(L:Plua_State; Index:Integer; Sender:TObject);
 begin
   SetDefaultMethods(L,Index,Sender);
-  
+
   {$IFDEF HASCANVAS}
   if (Sender.InheritsFrom(TCustomControl) or Sender.InheritsFrom(TGraphicControl) or
       Sender.InheritsFrom(TLCLComponent)) then

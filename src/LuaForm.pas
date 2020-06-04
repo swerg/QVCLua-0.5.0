@@ -21,7 +21,7 @@ type
 implementation
 
 Uses
-LuaProperties, Lua, SysUtils, ExtCtrls, Graphics;
+LuaProperties, Lua, SysUtils, ExtCtrls, Graphics, Windows, LMessages;
 
 var SaveAppHandle : THandle;
 
@@ -85,6 +85,18 @@ begin
   CheckArg(L, 1);
   lForm := TLuaForm(GetLuaObject(L, 1));
   lForm.Close;
+  Result := 0;
+end;
+
+function FormRelease(L: Plua_State): Integer; cdecl;
+var
+  lForm: TLuaForm;
+begin
+  if CheckArg(L, 1) then
+  begin
+  lForm := TLuaForm(GetLuaObject(L, 1));
+  Windows.PostMessage(lForm.Handle, CM_RELEASE, 0, 0);
+  end;
   Result := 0;
 end;
 
@@ -198,6 +210,7 @@ begin
   LuaSetTableFunction(L, Index, 'ShowOnTop', FormShowOnTop);
   LuaSetTableFunction(L, Index, 'SendToBack', FormSendToBack);
   LuaSetTableFunction(L, Index, 'Close', FormClose);
+  LuaSetTableFunction(L, Index, 'Release', FormRelease);
   LuaSetTableFunction(L, Index, 'Icon', FormIcon);
   LuaSetTableFunction(L, Index, 'IsDocked', FormIsDocked);
   LuaSetTableFunction(L, Index, 'Dock', FormDock);

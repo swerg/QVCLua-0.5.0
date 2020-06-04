@@ -1,9 +1,10 @@
 unit LuaButton;	
 interface
-Uses Classes, Controls, StdCtrls, ComCtrls, ExtCtrls, FileCtrl, EditBtn, Buttons, Forms, Spin, ActnList, CheckLst, TypInfo, LuaPas, LuaControl, LuaCanvas;
+Uses Classes, Controls, StdCtrls, ComCtrls, ExtCtrls, FileCtrl, EditBtn, Buttons, Forms, Spin, ActnList, CheckLst, TypInfo, LuaPas, LuaControl, LuaCanvas
+{QVCL},customdrawn_common, customdrawncontrols;
 function CreateButton(L: Plua_State): Integer; cdecl;
 type
-    TLuaButton = class(TButton)
+    TLuaButton = class(TCDButton)///QVCL class(TButton)
         LuaCtl: TLuaControl;
 {$IFDEF HASCANVAS}  		
 		LuaCanvas: TLuaCanvas;

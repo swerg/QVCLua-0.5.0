@@ -37,7 +37,7 @@ var
 begin
   CheckArg(L, 2);
   lStrings := TStrings(GetLuaObject(L, 1));
-  lStrings.Add(lua_tostring(L,2));
+  lStrings.Add(AnsiToUTF8(lua_tostring(L,2)));
   Result := 0;
 end;
 
@@ -47,7 +47,7 @@ var
 begin
   CheckArg(L, 3);
   lStrings := TStrings(GetLuaObject(L, 1));
-  lStrings.Insert(Trunc(lua_tonumber(L,2)),lua_tostring(L,3));
+  lStrings.Insert(Trunc(lua_tonumber(L,2)),AnsiToUTF8(lua_tostring(L,3)));
   Result := 0;
 end;
 
