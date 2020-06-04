@@ -1,7 +1,5 @@
 unit LuaPas;
 
-{$DEFINE USEQLUA}
-
 (*
  * A complete Pascal wrapper for Lua 5.1 DLL module.
  *

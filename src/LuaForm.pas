@@ -100,18 +100,6 @@ begin
   Result := 0;
 end;
 
-function FormGC(L: Plua_State): Integer; cdecl;
-var
-  lForm: TLuaForm;
-begin
-  if CheckArg(L, 1) then
-  begin
-  lForm := TLuaForm(GetLuaObject(L, 1));
-  LuaError(L,'Form GC!');
-  end;
-  Result := 0;
-end;
-
 function FormParent(L: Plua_State): Integer; cdecl;
 var
   LuaForm: TLuaForm;
@@ -232,7 +220,6 @@ begin
 
   LuaSetMetaFunction(L, index, '__index', LuaGetProperty);
   LuaSetMetaFunction(L, index, '__newindex', LuaSetProperty);
-  LuaSetMetaFunction(L, index, '__gc', FormGC);
 end;
 
 destructor TLuaForm.Destroy;
@@ -264,11 +251,7 @@ var
      SetPropertiesFromLuaTable(L, TObject(lForm),-1);
 
   if Application.MainForm = nil then begin
-     ///QVCL start
-     ///QVCL - set special main form, not first Lua-form
-     ///SetAsMainForm(lForm);
-     SetAsMainForm(TForm.Create(Application));
-     ///QVCL end
+     SetAsMainForm(lForm);
      Application.Initialize;
      Randomize;
   end;
