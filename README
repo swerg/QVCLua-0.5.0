@@ -1,0 +1,7 @@
+Visual Controls For LUA (VCLua)
+
+version 0.5.0
+platform WINDOWS, LINUX, MacOS
+luaversion 5.2
+date 04/06/2014
+

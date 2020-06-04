@@ -1,0 +1,4 @@
+Visual Controls For LUA (VCLua)
+version 0.5.0
+
+Apply patches (see patch folder) and recompile lazarus component libraries.
