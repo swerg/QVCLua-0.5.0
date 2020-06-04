@@ -28,7 +28,7 @@ begin
   lua_pushliteral (L, 'QVCLua');
   lua_settable (L, -3);
   lua_pushliteral (L, '_VERSION');
-  lua_pushliteral (L, '0.5.0-rev.1b2');
+  lua_pushliteral (L, '0.5.0-rev.1b3');
   lua_settable (L, -3);
 
   InitTotableFunc(L);

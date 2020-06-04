@@ -15,7 +15,7 @@ Uses Lua, Typinfo;
 // ***********************************************
 function LuaShowMessage(L: Plua_State): Integer; cdecl;
 begin
-  ShowMessage(lua_tostring(L,-1));
+  ShowMessage(AnsiToUTF8(lua_tostring(L,-1)));
   Result := 0;
 end;
 
@@ -37,7 +37,7 @@ var
 begin
   CheckArg(L, 3);
   n := lua_gettop(L);
-  Msg := lua_tostring(L,1);
+  Msg := AnsiToUTF8(lua_tostring(L,1));
   MsgType := TMsgDlgType(GetEnumValue(TypeInfo(TMsgDlgType),lua_tostring(L,2)));
   Mdb := [];
   if lua_istable(L,3) then begin
