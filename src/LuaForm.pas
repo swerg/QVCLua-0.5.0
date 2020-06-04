@@ -251,7 +251,11 @@ var
      SetPropertiesFromLuaTable(L, TObject(lForm),-1);
 
   if Application.MainForm = nil then begin
-     SetAsMainForm(lForm);
+     ///QVCL start
+     ///QVCL - set special main form, not first Lua-form
+     ///SetAsMainForm(lForm);
+     SetAsMainForm(TForm.Create(Application));
+     ///QVCL end
      Application.Initialize;
      Randomize;
   end;
