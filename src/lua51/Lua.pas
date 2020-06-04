@@ -142,7 +142,7 @@ begin
         s := lua_tostring(L,-1);
         if Assigned(Application) and (Application.MainForm<>nil) then begin
 ///QVCL           Application.Minimize;
-           ShowMessage('Lua Error:'+#10#13+s+#10#13+text)
+           MessageDlg('QVcl Error:'+#10#13+s+#10#13+text, mtError, [mbOk], 0);
         end;
      finally
      end;

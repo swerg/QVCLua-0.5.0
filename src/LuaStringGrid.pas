@@ -2,16 +2,27 @@ unit LuaStringGrid;
 
 interface
 
-Uses Classes, Types, Controls, Contnrs, LuaPas, LuaControl, Forms, Grids, StdCtrls, TypInfo, LuaCanvas;
+Uses Classes, Types, Controls, Contnrs, LuaPas, LuaControl, Forms, Grids, StdCtrls, TypInfo, LuaCanvas,
+Graphics;  ///QVCL
 
 function CreateStringGrid(L: Plua_State): Integer; cdecl;
 
 type
+    PLuaStringGridCellAttr = ^TLuaStringGridCellAttr;
+    TLuaStringGridCellAttr = record
+        Color: TColor;
+        IsSetColor: Boolean;
+    end;
+
 	TLuaStringGrid = class(TStringGrid)
           LuaCtl: TLuaControl;
           LuaCanvas: TLuaCanvas;
+           protected
+             function GetCellAttr(ACol, ARow: Integer): PLuaStringGridCellAttr;
+             procedure DoPrepareCanvas(aCol,aRow:Integer; aState: TGridDrawState); override;
            public
              destructor Destroy; override;
+             procedure SetCellColor(ACol, ARow: Integer; const AValue: TColor);
      end;
 // ***********************************************
 implementation
@@ -78,6 +89,19 @@ begin
   c := trunc(lua_tonumber(L,2));
   r := trunc(lua_tonumber(L,3));
   lStringGrid.Cells[c,r] := AnsiToUtf8(lua_tostring(L,4));
+  Result := 0;
+end;
+
+function SetCellColor(L: Plua_State): Integer; cdecl;
+var
+  lStringGrid:TLuaStringGrid;
+  c,r :Integer;
+begin
+  CheckArg(L, 4, 'SetCellColor');
+  lStringGrid := TLuaStringGrid(GetLuaObject(L, 1));
+  c := trunc(lua_tonumber(L,2));
+  r := trunc(lua_tonumber(L,3));
+  lStringGrid.SetCellColor(c,r,TColor(lua_tointeger(L,4)));
   Result := 0;
 end;
 
@@ -272,6 +296,60 @@ begin
   LuaSetMetaFunction(L, index, '__newindex', LuaSetProperty);
 end;
 
+function LoadColParamsFromTable(L:Plua_State; LGridCol:TGridColumn):Boolean;
+var
+   n:Integer;
+   PInfo: PPropInfo;
+begin
+   Result := False;
+   if lua_istable(L,-1) then begin
+     n := lua_gettop(L);
+     result := true;
+     lua_pushnil(L);
+     while (lua_next(L, n) <> 0) do begin
+           if lua_istable(L,-1) and (TObject(GetInt64Prop(LGridCol,lua_tostring(L, -2)))<>nil) then begin
+              SetPropertiesFromLuaTable(L,TObject(GetInt64Prop(LGridCol,lua_tostring(L, -2))),-1);
+           end
+           else begin
+               PInfo := GetPropInfo(LGridCol.ClassInfo,lua_tostring(L, -2));
+               if PInfo<>nil then
+                  SetProperty(L, -1, TComponent(LGridCol), PInfo);
+               // Todo error
+           end;
+           lua_pop(L, 1);
+     end;
+   end;
+end;
+
+function SetColParams(L: Plua_State): Integer; cdecl;
+var
+  lStringGrid:TLuaStringGrid;
+  LGridCol: TGridColumn;
+  n,i :Integer;
+begin
+  lStringGrid := TLuaStringGrid(GetLuaObject(L, 1));
+  n := lua_gettop(L);
+  if ((n=3) and (lua_isnumber(L,2))) then begin
+     if lua_istable(L,-1) then begin
+          LGridCol := lStringGrid.Columns[trunc(lua_tonumber(L,2))];
+          LoadColParamsFromTable(L,LGridCol);
+          inc(i);
+     end;
+  end else begin
+      lua_pushnil(L);
+      i:=0;
+      while (lua_next(L, n) <> 0) do begin      // menuitems
+        if lua_istable(L,-1) then begin
+          LGridCol := lStringGrid.Columns.Add;
+          LoadColParamsFromTable(L,LGridCol);
+          inc(i);
+        end;
+        lua_pop(L, 1);
+      end;
+  end;
+  Result := 0;
+end;
+
 function GetColumns(L: Plua_State): Integer; cdecl;
 var lStringGrid:TLuaStringGrid;
 begin
@@ -378,6 +456,58 @@ begin
   inherited Destroy;
 end;
 
+procedure TLuaStringGrid.DoPrepareCanvas(aCol,aRow:Integer; aState: TGridDrawState);
+var
+    CellAttr:PLuaStringGridCellAttr;
+begin
+    CellAttr := GetCellAttr(ACol, ARow);
+    if CellAttr.IsSetColor then
+       Canvas.Brush.Color := CellAttr.Color;
+    inherited;
+end;
+
+function TLuaStringGrid.GetCellAttr(ACol, ARow: Integer): PLuaStringGridCellAttr;
+
+  procedure CrealCellAttr(attr: PLuaStringGridCellAttr);
+  begin
+      attr.Color := Self.Color;
+      attr.IsSetColor := False;
+  end;
+
+var
+  C: PCellProps;
+begin
+  C:= FGrid.Celda[aCol,aRow];
+  if C<>nil then begin
+    if C^.Attr=nil then begin
+      C^.Attr:=new(PLuaStringGridCellAttr);
+      CrealCellAttr(C^.Attr);
+    end;
+  end else begin
+      New(C);
+      C^.Attr:=new(PLuaStringGridCellAttr);
+      CrealCellAttr(C^.Attr);
+      C^.Data:=nil;
+      C^.Text:=nil;
+      FGrid.Celda[aCol,aRow]:=C;
+  end;
+
+  Result := C^.Attr;
+end;
+
+procedure TLuaStringGrid.SetCellColor(ACol, ARow: Integer; const AValue: TColor);
+var
+  CellAttr:PLuaStringGridCellAttr;
+begin
+  CellAttr := GetCellAttr(ACol, ARow);
+  if CellAttr.Color <> AValue then begin
+      CellAttr.Color := AValue;
+      CellAttr.IsSetColor := True;
+      InvalidateCell(ACol, ARow);
+      Modified := True;
+  end;
+end;
+
 
 procedure ToTable(L:Plua_State; Index:Integer; Sender:TObject);
 begin
@@ -386,6 +516,7 @@ begin
   LuaSetTableFunction(L, Index, 'Clear', @Clear);
   LuaSetTableFunction(L, Index, 'GetCell', @CellsGet);
   LuaSetTableFunction(L, Index, 'SetCell', @CellsSet);
+  LuaSetTableFunction(L, Index, 'SetCellColor', @SetCellColor);
   LuaSetTableFunction(L, Index, 'DrawCell', @DrawCell);
   LuaSetTableFunction(L, Index, 'ColToTable', @ColsGet);
   LuaSetTableFunction(L, Index, 'LoadColFromTable', @SetColData);
@@ -396,6 +527,7 @@ begin
   LuaSetTableFunction(L, Index, 'SelectedCell', @GetSelectedCell);
   LuaSetTableFunction(L, Index, 'SetRowHeight', @SetRowHeight);
   LuaSetTableFunction(L, Index, 'SetColWidth', @SetColWidth);
+  LuaSetTableFunction(L, Index, 'SetColParams', @SetColParams);
   LuaSetTableFunction(L, Index, 'GetColumns', @GetColumns);
   LuaSetTableFunction(L, Index, 'AddCol', @AddCol);
   LuaSetTableFunction(L, Index, 'AddRow', @AddRow);

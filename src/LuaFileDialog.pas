@@ -50,11 +50,11 @@ begin
       lua_newtable(L);
       for i:= 0 to d.Files.Count-1 do begin
         lua_pushnumber(L,i+1);
-        lua_pushstring(L,pchar(d.Files[i]));
+        lua_pushstring(L,pchar(UTF8ToAnsi(d.Files[i])));  //QVCL
         lua_rawset(L,-3);
       end;
     end else
-      lua_pushstring(L,pchar(d.FileName))
+      lua_pushstring(L,pchar(UTF8ToAnsi(d.FileName)))     //QVCL
   end
   else begin
     lua_pushnil(L);
@@ -83,11 +83,11 @@ begin
       lua_newtable(L);
       for i:= 0 to d.Files.Count-1 do begin
         lua_pushnumber(L,i+1);
-        lua_pushstring(L,pchar(d.Files[i]));
+        lua_pushstring(L,pchar(UTF8ToAnsi(d.Files[i])));   //QVCL
         lua_rawset(L,-3);
       end;
     end else
-      lua_pushstring(L,pchar(d.FileName))
+      lua_pushstring(L,pchar(UTF8ToAnsi(d.FileName)))      //QVCL
   end
   else
     lua_pushnil(L);
@@ -115,11 +115,11 @@ begin
       lua_newtable(L);
       for i:= 0 to d.Files.Count-1 do begin
         lua_pushnumber(L,i+1);
-        lua_pushstring(L,pchar(d.Files[i]));
+        lua_pushstring(L,pchar(UTF8ToAnsi(d.Files[i])));   //QVCL
         lua_rawset(L,-3);
       end;
     end else
-      lua_pushstring(L,pchar(d.FileName))
+      lua_pushstring(L,pchar(UTF8ToAnsi(d.FileName)))      //QVCL
   end
   else
     lua_pushnil(L);
