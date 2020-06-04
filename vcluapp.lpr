@@ -16,7 +16,7 @@ function luaopen_vcl(L: Plua_State): Integer; cdecl;
 begin
   luaL_openlib(L, LUA_VCL_LIBNAME, @vcl_lib, 0);
   lua_pushliteral (L, '_COPYRIGHT');
-  lua_pushliteral (L, 'Copyright (C) 2006,2014 Hi-Project Ltd., 2014 QVCLua www.quik2dde.ru');
+  lua_pushliteral (L, 'Copyright (C) 2006,2014 Hi-Project Ltd., 2014,2015 QVCLua www.quik2dde.ru');
   lua_settable (L, -3);
   lua_pushliteral (L, '_DESCRIPTION');
   {$IFDEF LUA52}
@@ -29,7 +29,7 @@ begin
   lua_pushliteral (L, 'QVCLua');
   lua_settable (L, -3);
   lua_pushliteral (L, '_VERSION');
-  lua_pushliteral (L, '0.5.0-rev.1b');
+  lua_pushliteral (L, '0.5.0');
   lua_settable (L, -3);
 
   InitTotableFunc(L);

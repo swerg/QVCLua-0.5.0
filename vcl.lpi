@@ -21,8 +21,8 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="5"/>
-      <BuildNr Value="40"/>
-      <StringTable Comments="Based on VCLua library" FileDescription="Visual Component Library for QLua" LegalCopyright="(c) http://quik2dde.ru" OriginalFilename="qvcl.dll" ProductName="qvcl" ProductVersion="0.5.0-rev.1"/>
+      <BuildNr Value="42"/>
+      <StringTable Comments="Based on VCLua library" FileDescription="Visual Component Library for QLua" LegalCopyright="(c) http://quik2dde.ru" OriginalFilename="qvcl.dll" ProductName="qvcl" ProductVersion="0.5.0-rev.2"/>
     </VersionInfo>
     <BuildModes Count="1">
       <Item1 Name="Default" Default="True"/>
@@ -30,14 +30,6 @@
     <PublishOptions>
       <Version Value="2"/>
     </PublishOptions>
-    <RunParams>
-      <local>
-        <FormatVersion Value="1"/>
-        <HostApplicationFilename Value="D:\Work\lua\vclua\vclua-0.5.0\bin\lua52.exe"/>
-        <CommandLineParams Value="qtest.lua"/>
-        <WorkingDirectory Value="D:\Work\lua\vclua\vclua-0.5.0\bin"/>
-      </local>
-    </RunParams>
     <Units Count="4">
       <Unit0>
         <Filename Value="vcl.lpr"/>
@@ -68,7 +60,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value=".;$(LazarusDir)\components\synedit;$(LazarusDir)\lcl\include;$(ProjOutDir)"/>
-      <OtherUnitFiles Value="$(LazarusDir)\lcl\units\$(TargetCPU)-$(TargetOS);$(LazarusDir)\fpc\2.6.2\units\$(TargetCPU)-$(TargetOS);$(LazarusDir)\lcl\units\$(TargetCPU)-$(TargetOS)\$(LCLWidgetType);$(LazarusDir)\components\lazutils\lib\$(TargetCPU)-$(TargetOS);$(LazarusDir)\components\rtticontrols\lib\$(TargetCPU)-$(TargetOS)\$(TargetOS);$(LazarusDir)\components\lazcontrols\lib\$(TargetCPU)-$(TargetOS)\$(TargetOS);$(LazarusDir)\components\ideintf\units\$(TargetCPU)-$(TargetOS)\$(TargetOS);$(LazarusDir)\components\synedit\units\$(TargetCPU)-$(TargetOS)\$(TargetOS);src;genericsrc;$(LazarusDir)\components\synedit"/>
+      <OtherUnitFiles Value="$(LazarusDir)\lcl\units\$(TargetCPU)-$(TargetOS);$(LazarusDir)\fpc\2.6.4\units\$(TargetCPU)-$(TargetOS);$(LazarusDir)\lcl\units\$(TargetCPU)-$(TargetOS)\$(LCLWidgetType);$(LazarusDir)\components\lazutils\lib\$(TargetCPU)-$(TargetOS);$(LazarusDir)\components\rtticontrols\lib\$(TargetCPU)-$(TargetOS)\$(TargetOS);$(LazarusDir)\components\lazcontrols\lib\$(TargetCPU)-$(TargetOS)\$(TargetOS);$(LazarusDir)\components\rtticontrols;$(LazarusDir)\components\ideintf;src;genericsrc;$(LazarusDir)\components\synedit"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Parsing>
