@@ -6,7 +6,7 @@
     <General>
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
-      <Title Value="vcl"/>
+      <Title Value="qvcl"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
       <UseXPManifest Value="True"/>
@@ -21,8 +21,8 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="5"/>
-      <BuildNr Value="39"/>
-      <StringTable ProductVersion=""/>
+      <BuildNr Value="40"/>
+      <StringTable Comments="Based on VCLua library" FileDescription="Visual Component Library for QLua" LegalCopyright="(c) http://quik2dde.ru" OriginalFilename="qvcl.dll" ProductName="qvcl" ProductVersion="0.5.0-rev.1"/>
     </VersionInfo>
     <BuildModes Count="1">
       <Item1 Name="Default" Default="True"/>
