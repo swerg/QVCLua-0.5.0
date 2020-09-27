@@ -2,7 +2,13 @@ unit LuaProperties;
 
 interface
 
-Uses  Dialogs, Forms, Graphics, Classes, Controls, StdCtrls, TypInfo, LuaPas, Lua;
+Uses  Dialogs, Forms, Graphics, Classes, Controls, StdCtrls, TypInfo,
+  {$IFDEF LUA53}
+    Lua53
+  {$ELSE}
+    LuaPas
+  {$ENDIF}
+  , Lua;
 
 function LuaListProperties(L: Plua_State): Integer; cdecl;
 function LuaGetProperty(L: Plua_State): Integer; cdecl;
@@ -20,7 +26,7 @@ function ToColor(L: Plua_State; index: Integer):TColor;
 
 implementation
 
-Uses SysUtils, ExtCtrls, Grids, ActnList, LuaActionList, LuaImageList, LuaControl, LCLProc,
+Uses SysUtils, LConvEncoding, ExtCtrls, Grids, ActnList, LuaActionList, LuaImageList, LuaControl, LCLProc,
      LuaStrings,
      LuaCanvas,
      LuaBitmap,
@@ -41,7 +47,7 @@ begin
         end;
     end else if lua_isstring(L,Index) then
        Result := lua_tostring(L,Index);
-    Result := AnsiToUTF8(Result);  ///QVCL
+    Result := CP1251ToUTF8(Result);  ///QVCL
 end;
 
 function ToColor(L: Plua_State; index: Integer):TColor;
@@ -268,7 +274,7 @@ begin
 ///QVCL change start
 	tkChar, tkWChar:
           begin
-            Str := AnsiToUTF8(lua_tostring(L, index));
+            Str := CP1251ToUTF8(lua_tostring(L, index));
             if length(Str)<1 then
               SetOrdProp(Comp, PInfo, 0)
             else
@@ -301,14 +307,14 @@ begin
         tkString, tkLString, tkWString:
                 begin
                     Str := lua_tostring(L, index);
-                    SetStrProp(Comp, PInfo, AnsiToUtf8(Str));
+                    SetStrProp(Comp, PInfo, CP1251ToUTF8(Str));
                 end;
 
         tkInt64: begin
 	      	SetInt64Prop(Comp, PInfo, Int64(Round(lua_tonumber(L, index))));
                 end;
      else begin
-               Str := AnsiToUtf8(lua_tostring(L, index));
+               Str := CP1251ToUTF8(lua_tostring(L, index));
                if (PInfo^.Proptype^.Name='TTranslateString') then
 		    SetStrProp(Comp, PInfo, Str )
                else if (PInfo^.Proptype^.Name='AnsiString') then
@@ -495,14 +501,14 @@ begin
           tkString,
           tkLString,
           tkWString:
-            lua_pushstring(L,pchar(UTF8ToAnsi(GetStrProp(Comp, PInfo))));  ///QVCL
+            lua_pushstring(L,pchar(UTF8ToCP1251(GetStrProp(Comp, PInfo))));  ///QVCL
           tkInt64:
             lua_pushnumber(L,GetInt64Prop(Comp, PInfo));
       else begin
 	        if (PInfo^.Proptype^.Name='TTranslateString') then begin
-		        lua_pushstring(L,pchar(UTF8ToAnsi(GetStrProp(Comp, PInfo))));  ///QVCL
+		        lua_pushstring(L,pchar(UTF8ToCP1251(GetStrProp(Comp, PInfo))));  ///QVCL
                 end else if (PInfo^.Proptype^.Name='AnsiString') then begin
-		        lua_pushstring(L,pchar(UTF8ToAnsi(GetStrProp(Comp, PInfo))));  ///QVCL
+		        lua_pushstring(L,pchar(UTF8ToCP1251(GetStrProp(Comp, PInfo))));  ///QVCL
 		end else begin
 			lua_pushnil(L);
 			LuaError(L,'Property not supported!', lua_tostring(L,2) + ' ' + PInfo^.Proptype^.Name);
@@ -527,7 +533,7 @@ begin
 	  LUA_TNUMBER:
              lua_pushnumber(L,LuaRawGetTableNumber(L,1,lua_tostring(L, 2)));
 	  LUA_TSTRING:
-             lua_pushstring(L,PChar(UTF8ToAnsi(LuaRawGetTableString(L,1,lua_tostring(L, 2)))));  ///QVCL
+             lua_pushstring(L,PChar(UTF8ToCP1251(LuaRawGetTableString(L,1,lua_tostring(L, 2)))));  ///QVCL
 	  LUA_TTABLE:
             begin
 	  	LuaRawGetTable(L,1,lua_tostring(L, 2));

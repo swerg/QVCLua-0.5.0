@@ -2,7 +2,13 @@ unit LuaMouse;
 
 interface
 
-Uses Classes, Controls, Contnrs, LuaPas, Forms, ExtCtrls, TypInfo;
+Uses Classes, Controls, Contnrs,
+  {$IFDEF LUA53}
+    Lua53
+  {$ELSE}
+    LuaPas
+  {$ENDIF}
+  , Forms, ExtCtrls, TypInfo;
 
 function GetCursorPos(L: Plua_State): Integer; cdecl;
 

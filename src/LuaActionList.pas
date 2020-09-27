@@ -2,7 +2,13 @@ unit LuaActionList;
 
 interface
 
-Uses Classes, Controls, ComCtrls, ExtCtrls, Buttons, Forms, StdCtrls, Spin, ActnList, TypInfo, LuaPas, LuaControl;
+Uses Classes, Controls, ComCtrls, ExtCtrls, Buttons, Forms, StdCtrls, Spin, ActnList, TypInfo,
+  {$IFDEF LUA53}
+    Lua53
+  {$ELSE}
+    LuaPas
+  {$ENDIF}
+  , LuaControl;
 
 function CreateActionList(L: Plua_State): Integer; cdecl;
 function CreateAction(L: Plua_State): Integer; cdecl;

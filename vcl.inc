@@ -1,5 +1,8 @@
 
-  {$IFDEF LUA52}
+  {$IF Defined(LUA53)}
+     Lua in 'src/lua53/Lua.pas',
+     Lua53 in 'src/lua53/lua53.pas',
+  {$ELSEIF Defined(LUA52)}
      Lua in 'src/lua52/Lua.pas',
      LuaPas in 'src/lua52/LuaPas.pas',
   {$ELSE}
@@ -40,8 +43,8 @@
 
   LuaXMLConfig in 'src/LuaXMLConfig.pas',
 
-  LuaSyn in 'src/LuaSyn.pas',
-  LuaSynEdit in 'src/LuaSynEdit.pas',
+  //LuaSyn in 'src/LuaSyn.pas',
+  //LuaSynEdit in 'src/LuaSynEdit.pas',
   LuaPropertyGrid in 'src/LuaPropertyGrid.pas',
 
   LuaStream in 'src/LuaStream.pas',
@@ -50,7 +53,7 @@
 
 const
   LUA_VCL_LIBNAME = 'vcl';
-  LIB_COUNT = 44 + {$I genericsrc/genlibcount.inc};
+  LIB_COUNT = 43 + {$I genericsrc/genlibcount.inc};
 
 var
    vcl_lib : array[0..LIB_COUNT] of lual_reg = (
@@ -99,7 +102,7 @@ var
                 (name:'XMLFormToLua'; func:@XMLFormToLua),
 
 		// SynEdit
-		(name:'SynEdit'; func:@CreateSynEditor),
+//		(name:'SynEdit'; func:@CreateSynEditor),
 
 		// Help
 		(name:'ListProperties'; func:@LuaListProperties),

@@ -1,6 +1,12 @@
 unit LuaSpinEdit;	
 interface
-Uses Classes, Controls, StdCtrls, ComCtrls, ExtCtrls, FileCtrl, EditBtn, Buttons, Forms, Spin, ActnList, CheckLst, TypInfo, LuaPas, LuaControl, LuaCanvas;
+Uses Classes, Controls, StdCtrls, ComCtrls, ExtCtrls, FileCtrl, EditBtn, Buttons, Forms, Spin, ActnList, CheckLst, TypInfo,
+  {$IFDEF LUA53}
+    Lua53
+  {$ELSE}
+    LuaPas
+  {$ENDIF}
+  , LuaControl, LuaCanvas;
 function CreateSpinEdit(L: Plua_State): Integer; cdecl;
 type
     TLuaSpinEdit = class(TSpinEdit)

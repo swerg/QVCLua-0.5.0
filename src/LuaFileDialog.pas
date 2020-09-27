@@ -3,7 +3,13 @@ unit LuaFileDialog;
 interface
 
 uses
-  Classes, SysUtils, LuaControl, Dialogs, LuaPas;
+  Classes, SysUtils, LuaControl, Dialogs,
+  {$IFDEF LUA53}
+    Lua53
+  {$ELSE}
+    LuaPas
+  {$ENDIF}
+  , Lua;
 
   type
     TLuaOpenDialog = class(TOpenDialog)
@@ -35,7 +41,7 @@ function CreateFontDialog(L: Plua_State): Integer; cdecl;
 
 implementation
 
-Uses LuaProperties, Lua, Typinfo;
+Uses LConvEncoding, LuaProperties, Typinfo;
 
 function OpenExecute(L: Plua_State): Integer; cdecl;
 var
@@ -50,11 +56,11 @@ begin
       lua_newtable(L);
       for i:= 0 to d.Files.Count-1 do begin
         lua_pushnumber(L,i+1);
-        lua_pushstring(L,pchar(UTF8ToAnsi(d.Files[i])));  //QVCL
+        lua_pushstring(L,pchar(UTF8ToCP1251(d.Files[i])));  //QVCL
         lua_rawset(L,-3);
       end;
     end else
-      lua_pushstring(L,pchar(UTF8ToAnsi(d.FileName)))     //QVCL
+      lua_pushstring(L,pchar(UTF8ToCP1251(d.FileName)))     //QVCL
   end
   else begin
     lua_pushnil(L);
@@ -83,11 +89,11 @@ begin
       lua_newtable(L);
       for i:= 0 to d.Files.Count-1 do begin
         lua_pushnumber(L,i+1);
-        lua_pushstring(L,pchar(UTF8ToAnsi(d.Files[i])));   //QVCL
+        lua_pushstring(L,pchar(UTF8ToCP1251(d.Files[i])));   //QVCL
         lua_rawset(L,-3);
       end;
     end else
-      lua_pushstring(L,pchar(UTF8ToAnsi(d.FileName)))      //QVCL
+      lua_pushstring(L,pchar(UTF8ToCP1251(d.FileName)))      //QVCL
   end
   else
     lua_pushnil(L);
@@ -115,11 +121,11 @@ begin
       lua_newtable(L);
       for i:= 0 to d.Files.Count-1 do begin
         lua_pushnumber(L,i+1);
-        lua_pushstring(L,pchar(UTF8ToAnsi(d.Files[i])));   //QVCL
+        lua_pushstring(L,pchar(UTF8ToCP1251(d.Files[i])));   //QVCL
         lua_rawset(L,-3);
       end;
     end else
-      lua_pushstring(L,pchar(UTF8ToAnsi(d.FileName)))      //QVCL
+      lua_pushstring(L,pchar(UTF8ToCP1251(d.FileName)))      //QVCL
   end
   else
     lua_pushnil(L);

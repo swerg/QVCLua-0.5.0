@@ -2,7 +2,13 @@ unit LuaTrayIcon;
 
 interface
 
-Uses Classes, Controls, Contnrs, LuaPas, LuaControl, Forms, ExtCtrls, TypInfo, LuaCanvas;
+Uses Classes, Controls, Contnrs,
+  {$IFDEF LUA53}
+    Lua53
+  {$ELSE}
+    LuaPas
+  {$ENDIF}
+  , LuaControl, Forms, ExtCtrls, TypInfo, LuaCanvas;
 
 function CreateTrayIcon(L: Plua_State): Integer; cdecl;
 

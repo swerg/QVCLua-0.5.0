@@ -2,7 +2,13 @@ unit LuaStrings;
 
 interface
 
-Uses Classes, Types, Controls, Contnrs, LuaPas, Forms, StdCtrls, FileCtrl, TypInfo;
+Uses Classes, Types, Controls, Contnrs, Forms, StdCtrls, FileCtrl, TypInfo,
+  {$IFDEF LUA53}
+    Lua53
+  {$ELSE}
+    LuaPas
+  {$ENDIF}
+  ;
 
 procedure TStringsToTable(L: Plua_State; Comp:TObject; PInfo:PPropInfo; index: Integer);
 
@@ -29,15 +35,16 @@ type
 
 implementation
 
-Uses SysUtils, LuaProperties, Lua, SynEdit, CheckLst, Dialogs;
+Uses SysUtils, LuaProperties, Lua, {SynEdit,} CheckLst, Dialogs, Windows, LConvEncoding;
 
 function StringsAdd(L: Plua_State): Integer; cdecl;
 var
   lStrings: TStrings;
+  s,t: String;
 begin
   CheckArg(L, 2);
   lStrings := TStrings(GetLuaObject(L, 1));
-  lStrings.Add(AnsiToUTF8(lua_tostring(L,2)));
+  lStrings.Add(CP1251ToUTF8(lua_tostring(L,2)));
   Result := 0;
 end;
 
@@ -47,7 +54,7 @@ var
 begin
   CheckArg(L, 3);
   lStrings := TStrings(GetLuaObject(L, 1));
-  lStrings.Insert(Trunc(lua_tonumber(L,2)),AnsiToUTF8(lua_tostring(L,3)));
+  lStrings.Insert(Trunc(lua_tonumber(L,2)),CP1251ToUTF8(lua_tostring(L,3)));
   Result := 0;
 end;
 

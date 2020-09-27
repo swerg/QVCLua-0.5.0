@@ -2,7 +2,13 @@ unit LuaStatusBar;
 
 interface
 
-Uses Classes, Controls, Contnrs, LuaPas, LuaControl, Forms, ComCtrls, TypInfo;
+Uses Classes, Controls, Contnrs,
+  {$IFDEF LUA53}
+    Lua53
+  {$ELSE}
+    LuaPas
+  {$ENDIF}
+  , LuaControl, Forms, ComCtrls, TypInfo;
 
 function CreateStatusBar(L: Plua_State): Integer; cdecl;
 

@@ -3,7 +3,11 @@ unit LuaStream;
 interface
 
 Uses ExtCtrls, Controls, Classes,
+  {$IFDEF LUA53}
+     Lua53,
+  {$ELSE}
      LuaPas,
+  {$ENDIF}
      LuaControl;
 
 function CreateStream(L: Plua_State): Integer; cdecl;

@@ -2,3 +2,14 @@
 *.res
 *.lps
 *.bak
+*.a
+*.o
+*.ppu
+backup/*
+src/backup/*
+src/lua51/backup/*
+src/lua52/backup/*
+src/lua53/backup/*
+Lua-test/tmp/*
+lib/*
+bin/*

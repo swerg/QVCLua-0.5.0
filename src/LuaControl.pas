@@ -9,10 +9,14 @@ Uses Controls,
      Forms,
      Grids,
      ComCtrls,
+  {$IFDEF LUA53}
+     Lua53,
+  {$ELSE}
      LuaPas,
+  {$ENDIF}
      Lua,
-     SynEdit,
-     SynEditKeyCmds,
+     //SynEdit,
+     //SynEditKeyCmds,
      LclType,
      Messages,
      SysUtils;
@@ -200,13 +204,16 @@ type
           procedure OnLuaReplace(Sender: TObject);
 
           //SynEdit
+{
           procedure OnLuaReplaceText(Sender: TObject; const ASearch,
                     AReplace: string; Line, Column: integer; var ReplaceAction: TSynReplaceAction);
           procedure OnLuaCommandProcessed(Sender: TObject;
                     var Command: TSynEditorCommand; var AChar: TUTF8Char; Data: pointer);
           procedure OnLuaClickLink(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
           procedure OnLuaMouseLink(Sender: TObject; X, Y: Integer; var AllowMouseLink: Boolean);
+}
 
+          // ListView
           procedure OnLuaColumnClick(Sender: TObject; Column: TListColumn);
           procedure OnLuaSelectItem(Sender: TObject; Item: TListItem; Selected: Boolean);
 
@@ -215,6 +222,7 @@ type
           // EVENT HANDLERS
 
           // SynEdit
+{
           procedure ReplaceTextEventHandler(Sender: TObject; EventCFunc: TLuaCFunction; const ASearch,
                     AReplace: string; Line, Column: integer; var ReplaceAction: TSynReplaceAction);
           procedure CommandProcessedEventHandler(Sender: TObject; EventCFunc: TLuaCFunction;
@@ -223,6 +231,7 @@ type
                     Shift: TShiftState; X, Y: Integer);
           procedure MouseLinkEventHandler(Sender: TObject; EventCFunc: TLuaCFunction; X, Y: Integer;
                     var AllowMouseLink: Boolean);
+}
 
           procedure NotifyEventHandler(Sender: TObject; EventCFunc: TLuaCFunction);
           procedure KeyEventHandler(Sender: TObject; EventCFunc: TLuaCFunction; var Key: Word; Shift: TShiftState);
@@ -1052,7 +1061,7 @@ begin
     end;
 end;
 
-
+{
 procedure TLuaControl.ReplaceTextEventHandler(Sender: TObject; EventCFunc: TLuaCFunction; const ASearch,
   AReplace: string; Line, Column: integer; var ReplaceAction: TSynReplaceAction);
 var LL:Plua_State;
@@ -1113,6 +1122,7 @@ begin
           AllowMouseLink := lua_toboolean(LL,-1);
     end;
 end;
+}
 
 procedure TLuaControl.ColumnClickEventHandler(Sender: TObject; EventCFunc: TLuaCFunction; Column: TListColumn);
 var LL:Plua_State;
@@ -1285,6 +1295,7 @@ procedure TLuaControl.OnLuaReplace(Sender: TObject);
   begin NotifyEventHandler(Sender, OnReplace_Function);end;
 
 // SynEdit
+{
 procedure TLuaControl.OnLuaReplaceText(Sender: TObject; const ASearch,AReplace: string; Line, Column: integer; var ReplaceAction: TSynReplaceAction);
 begin ReplaceTextEventHandler(Sender, OnReplaceText_Function, ASearch, AReplace, Line, Column, ReplaceAction); end;
 procedure TLuaControl.OnLuaCommandProcessed(Sender: TObject; var Command: TSynEditorCommand; var AChar: TUTF8Char; Data: pointer);
@@ -1293,6 +1304,7 @@ procedure TLuaControl.OnLuaClickLink(Sender: TObject; Button: TMouseButton; Shif
 begin ClickLinkEventHandler(Sender, OnClickLink_Function, Button, Shift, X, Y); end;
 procedure TLuaControl.OnLuaMouseLink(Sender: TObject; X, Y: Integer; var AllowMouseLink: Boolean);
 begin MouseLinkEventHandler(Sender, OnMouseLink_Function, X, Y, AllowMouseLink); end;
+}
 
 // Listview
 procedure TLuaControl.OnLuaColumnClick(Sender: TObject; Column: TListColumn);

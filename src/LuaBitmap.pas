@@ -3,8 +3,13 @@ unit LuaBitmap;
 interface
 
 Uses ExtCtrls, Controls, Classes,
-     LuaPas, Lua, LuaProperties,
-     Graphics;
+  {$IFDEF LUA53}
+    Lua53
+  {$ELSE}
+    LuaPas
+  {$ENDIF}
+    , Lua, LuaProperties, 
+    Graphics;
 
 type
 	TLuaBitmap = class(TBitmap)

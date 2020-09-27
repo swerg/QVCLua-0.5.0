@@ -4,7 +4,11 @@ interface
 
 Uses ExtCtrls, Controls, Classes,
      ImgList,
+  {$IFDEF LUA53}
+     Lua53,
+  {$ELSE}
      LuaPas,
+  {$ENDIF}
      LuaControl,
      Graphics;
 

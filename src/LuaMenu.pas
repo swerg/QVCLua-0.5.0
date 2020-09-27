@@ -2,7 +2,13 @@ unit LuaMenu;
 
 interface
 
-Uses Menus, Classes, LuaPas, LuaControl, Lua;
+Uses Menus, Classes,
+  {$IFDEF LUA53}
+    Lua53
+  {$ELSE}
+    LuaPas
+  {$ENDIF}
+  , Lua, LuaControl;
 
 type
 

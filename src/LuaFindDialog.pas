@@ -3,7 +3,13 @@ unit LuaFindDialog;
 interface
 
 uses
-  Classes, SysUtils, LuaControl, Dialogs, LuaPas;
+  Classes, SysUtils, LuaControl, Dialogs,
+  {$IFDEF LUA53}
+    Lua53
+  {$ELSE}
+    LuaPas
+  {$ENDIF}
+  , Lua;
 
   type
     TLuaFindDialog = class(TFindDialog)
@@ -19,7 +25,7 @@ function CreateReplaceDialog(L: Plua_State): Integer; cdecl;
 
 implementation
 
-Uses Lua, LuaProperties;
+Uses LuaProperties;
 
 function FindExecute(L: Plua_State): Integer; cdecl;
 var

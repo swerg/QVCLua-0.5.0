@@ -2,7 +2,13 @@ unit LuaDialogs;
 
 interface
 
-Uses LuaPas, Controls, Dialogs, Sysutils;
+Uses Controls, Dialogs, Sysutils,
+  {$IFDEF LUA53}
+    Lua53
+  {$ELSE}
+    LuaPas
+  {$ENDIF}
+;
 
 function LuaShowMessage(L: Plua_State): Integer; cdecl;
 function LuaMessageDlg(L: Plua_State): Integer; cdecl;
@@ -10,12 +16,12 @@ function LuaMessageDlg(L: Plua_State): Integer; cdecl;
 
 implementation
 
-Uses Lua, Typinfo;
+Uses LConvEncoding, Lua, Typinfo;
 
 // ***********************************************
 function LuaShowMessage(L: Plua_State): Integer; cdecl;
 begin
-  ShowMessage(AnsiToUTF8(lua_tostring(L,-1)));
+  ShowMessage(CP1251ToUTF8(lua_tostring(L,-1)));
   Result := 0;
 end;
 
@@ -48,7 +54,7 @@ begin
   begin
     if n = 4 then
     begin
-      Caption := AnsiToUTF8(lua_tostring(L,1));
+      Caption := CP1251ToUTF8(lua_tostring(L,1));
       Param_msg := 2;
       Param_type := 3;
       Param_btn := 4;
@@ -59,7 +65,7 @@ begin
       Param_type := 2;
       Param_btn := 3;
     end;
-    Msg := AnsiToUTF8(lua_tostring(L,Param_msg));
+    Msg := CP1251ToUTF8(lua_tostring(L,Param_msg));
     MsgType := TMsgDlgType(GetEnumValue(TypeInfo(TMsgDlgType),lua_tostring(L,Param_type)));
     Mdb := [];
     if lua_istable(L,Param_btn) then begin

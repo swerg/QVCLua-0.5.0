@@ -5,7 +5,13 @@ unit LuaTable;
 interface
 
 uses
-  Classes, SysUtils, Lua, LuaPas;
+  Classes, SysUtils,
+  {$IFDEF LUA53}
+    Lua53
+  {$ELSE}
+    LuaPas
+  {$ENDIF}
+  , Lua;
 
 procedure InitTotableFunc(L: Plua_State);
 

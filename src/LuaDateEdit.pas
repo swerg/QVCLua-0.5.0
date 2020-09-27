@@ -1,6 +1,12 @@
 unit LuaDateEdit;	
 interface
-Uses Classes, Controls, EditBtn, Buttons, Forms, TypInfo, LuaPas, LuaControl;
+Uses Classes, Controls, EditBtn, Buttons, Forms, TypInfo,
+  {$IFDEF LUA53}
+    Lua53
+  {$ELSE}
+    LuaPas
+  {$ENDIF}
+  , LuaControl;
 function CreateDateEdit(L: Plua_State): Integer; cdecl;
 type
     TLuaDateEdit = class(TDateEdit)

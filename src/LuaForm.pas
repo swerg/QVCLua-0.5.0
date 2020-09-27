@@ -2,8 +2,14 @@ unit LuaForm;
 
 interface
 
-Uses Classes, Types, Controls, LuaPas, LuaControl, Forms, TypInfo, InterfaceBase,
-     Dialogs, LuaCanvas;
+Uses Classes, Types, Controls,
+  {$IFDEF LUA53}
+    Lua53
+  {$ELSE}
+    LuaPas
+  {$ENDIF}
+  , LuaControl, Forms, TypInfo, InterfaceBase,
+    Dialogs, LuaCanvas;
 
 function CreateForm(L: Plua_State): Integer; cdecl;
 

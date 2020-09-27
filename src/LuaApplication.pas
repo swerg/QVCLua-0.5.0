@@ -4,7 +4,13 @@ unit LuaApplication;
 
 interface
 
-Uses Classes, Controls, LuaPas, Forms, TypInfo, SysUtils;
+Uses Classes, Controls,
+  {$IFDEF LUA53}
+    Lua53
+  {$ELSE}
+    LuaPas
+  {$ENDIF}
+  , Forms, TypInfo, SysUtils;
 
 function CreateApplication(L: Plua_State): Integer; cdecl;
 
@@ -19,7 +25,7 @@ function XMLFormToLua(L: Plua_State): Integer; cdecl;
 
 implementation
 
-Uses LuaProperties, Lua, LuaForm,  DOM, fileutil, XMLRead;
+Uses LConvEncoding, LuaProperties, Lua, LuaForm,  DOM, LazFileUtils, XMLRead;
 
 // ***********************************************
 
@@ -260,7 +266,7 @@ begin
   s := String(lua_tostring(L,1));
   if FileExistsUTF8(s) then begin
      try
-       ReadXMLFile(FDoc, UTF8ToSys(s));
+       ReadXMLFile(FDoc, UTF8ToCP1251(s));
      except
        FreeAndNil(FDoc);
      end;

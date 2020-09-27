@@ -2,7 +2,13 @@ unit LuaPropertyGrid;
 
 interface
 
-Uses Classes, Types, Controls, LuaPas, LuaControl, RTTIGrids, Dialogs;
+Uses Classes, Types, Controls,
+  {$IFDEF LUA53}
+    Lua53
+  {$ELSE}
+    LuaPas
+  {$ENDIF}
+  , LuaControl, RTTIGrids, Dialogs;
 
 function CreatePropertyGrid(L: Plua_State): Integer; cdecl;
 

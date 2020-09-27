@@ -1,6 +1,12 @@
 unit LuaFileListBox;	
 interface
-Uses Classes, Controls, FileCtrl, TypInfo, LuaPas, LuaControl;
+Uses Classes, Controls, FileCtrl, TypInfo,
+  {$IFDEF LUA53}
+    Lua53
+  {$ELSE}
+    LuaPas
+  {$ENDIF}
+  , LuaControl;
 function CreateFileListBox(L: Plua_State): Integer; cdecl;
 type
     TLuaFileListBox = class(TFileListBox)

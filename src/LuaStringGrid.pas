@@ -2,7 +2,13 @@ unit LuaStringGrid;
 
 interface
 
-Uses Classes, Types, Controls, Contnrs, LuaPas, LuaControl, Forms, Grids, StdCtrls, TypInfo, LuaCanvas,
+Uses Classes, Types, Controls, Contnrs,
+  {$IFDEF LUA53}
+    Lua53
+  {$ELSE}
+    LuaPas
+  {$ENDIF}
+  , LuaControl, Forms, Grids, StdCtrls, TypInfo, LuaCanvas,
 Graphics;  ///QVCL
 
 function CreateStringGrid(L: Plua_State): Integer; cdecl;
@@ -27,7 +33,7 @@ type
 // ***********************************************
 implementation
 
-Uses LuaStrings, LuaProperties, Lua, Dialogs;
+Uses LConvEncoding, LuaStrings, LuaProperties, Lua, Dialogs;
 
 
 function Clear(L: Plua_State): Integer; cdecl;
@@ -88,7 +94,7 @@ begin
   lStringGrid := TLuaStringGrid(GetLuaObject(L, 1));
   c := trunc(lua_tonumber(L,2));
   r := trunc(lua_tonumber(L,3));
-  lStringGrid.Cells[c,r] := AnsiToUtf8(lua_tostring(L,4));
+  lStringGrid.Cells[c,r] := CP1251ToUTF8(lua_tostring(L,4));
   Result := 0;
 end;
 
@@ -258,7 +264,7 @@ begin
      lua_pushnil(L);
      i := 0;
      while (lua_next(L, 3) <> 0) do begin
-        lStringGrid.Cells[i,r] := AnsiToUtf8(lua_tostring(L,-1));
+        lStringGrid.Cells[i,r] := CP1251ToUTF8(lua_tostring(L,-1));
         lua_pop(L, 1);
         inc(i);
      end;
@@ -279,7 +285,7 @@ begin
      lua_pushnil(L);
      i := 0;
      while (lua_next(L, 3) <> 0) do begin
-        lStringGrid.Cells[c,i] := AnsiToUtf8(lua_tostring(L,-1));
+        lStringGrid.Cells[c,i] := CP1251ToUTF8(lua_tostring(L,-1));
         lua_pop(L, 1);
         inc(i);
      end;

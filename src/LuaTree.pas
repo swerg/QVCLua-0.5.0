@@ -4,7 +4,13 @@ unit LuaTree;
 
 interface
 
-Uses LuaPas,LuaControl,ComCtrls,Controls,Classes,Types,LuaCanvas, DOM,  lazutf8;
+Uses LazUTF8,
+  {$IFDEF LUA53}
+    Lua53
+  {$ELSE}
+    LuaPas
+  {$ENDIF}
+  ,LuaControl,ComCtrls,Controls,Classes,Types,LuaCanvas, DOM,  LazFileUtils;
 
 function CreateTreeView(L: Plua_State): Integer; cdecl;
 
