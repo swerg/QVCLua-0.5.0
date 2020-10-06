@@ -22,7 +22,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="5"/>
-      <BuildNr Value="57"/>
+      <BuildNr Value="63"/>
       <StringTable Comments="Based on VCLua library" FileDescription="Visual Component Library for QLua" LegalCopyright="Copyright (C) 2006,2014 Hi-Project Ltd., 2013,2020 QVCLua www.quik2dde.ru" OriginalFilename="qvcl.dll" ProductName="QVCLua" ProductVersion="0.5.0-rev.4 (beta3)"/>
     </VersionInfo>
     <BuildModes Count="2">
@@ -102,7 +102,7 @@
         </Mode0>
       </Modes>
     </RunParams>
-    <Units Count="66">
+    <Units Count="67">
       <Unit0>
         <Filename Value="vcl.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -369,6 +369,10 @@
         <Filename Value="src\LuaSyn.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit65>
+      <Unit66>
+        <Filename Value="src\LuaQvcl.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit66>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

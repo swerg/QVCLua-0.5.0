@@ -27,7 +27,7 @@ type
 implementation
 
 Uses
-LuaProperties, Lua, SysUtils, ExtCtrls, Graphics, Windows, LMessages;
+LuaProperties, Lua, SysUtils, ExtCtrls, Graphics, Windows, LMessages, LuaQvcl;
 
 var SaveAppHandle : THandle;
 
@@ -110,10 +110,11 @@ function FormGC(L: Plua_State): Integer; cdecl;
 var
   lForm: TLuaForm;
 begin
+///QVCL test __gc function
   if CheckArg(L, 1) then
   begin
   lForm := TLuaForm(GetLuaObject(L, 1));
-  LuaError(L,'Form GC!');
+  QvclDebugMessage('Form GC!');
   end;
   Result := 0;
 end;
@@ -238,7 +239,7 @@ begin
 
   LuaSetMetaFunction(L, index, '__index', LuaGetProperty);
   LuaSetMetaFunction(L, index, '__newindex', LuaSetProperty);
-  LuaSetMetaFunction(L, index, '__gc', FormGC);
+{QVCL test __gc function}  LuaSetMetaFunction(L, index, '__gc', FormGC);
 end;
 
 destructor TLuaForm.Destroy;

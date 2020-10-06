@@ -47,13 +47,15 @@
   //LuaSynEdit in 'src/LuaSynEdit.pas',
   LuaPropertyGrid in 'src/LuaPropertyGrid.pas',
 
+  LuaQvcl in 'src/LuaQvcl.pas',
+
   LuaStream in 'src/LuaStream.pas',
   LuaMouse in 'src/LuaMouse.pas',
   LuaTable in 'src/LuaTable.pas';
 
 const
   LUA_VCL_LIBNAME = 'vcl';
-  LIB_COUNT = 43 + {$I genericsrc/genlibcount.inc};
+  LIB_COUNT = 44 + {$I genericsrc/genlibcount.inc};
 
 var
    vcl_lib : array[0..LIB_COUNT] of lual_reg = (
@@ -122,6 +124,9 @@ var
 
 		// Stream
 		(name:'Stream'; func:@CreateStream),
+
+		// QVCL
+		(name:'DebugMode'; func:@SetDebugMode),
 
 		(name:nil;func:nil)
    );
