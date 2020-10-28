@@ -27,7 +27,7 @@ type
 implementation
 
 Uses
-LuaProperties, Lua, SysUtils, ExtCtrls, Graphics, Windows, LMessages, LuaQvcl;
+LuaProperties, Lua, SysUtils, ExtCtrls, Graphics, Windows, LMessages, LConvEncoding, LuaQvcl;
 
 var SaveAppHandle : THandle;
 
@@ -204,7 +204,7 @@ var
 begin
  Result := 0;
  Frm := TLuaForm(GetLuaObject(L, 1));
- Str := lua_tostring(L,2);
+ Str := CP1251ToUTF8(lua_tostring(L,2));
  if (fileExists(Str)) then begin
       Frm.Icon.LoadFromFile(Str);
  end;
