@@ -1,3 +1,19 @@
+# Visual Controls For Lua in QUIK (QVCLua)
+
+## About
+It's Visual Controls library for Lua in QUIK (named QVCLua).
+For more information see https://quik2dde.ru/viewtopic.php?id=111
+
+## Installing
+Put qvcl.dll file to QUIK folder (near with info.exe).
+
+## Building
+Now the project is corrected for building in Lazarus 2.0.10. I don't have information about building in other versions of Lazarus.
+The project has two building configurations:
+- Win32 (Lua5.1) - for QUIK 6.x and 7.x
+- Win64 (Lua5.3) - for QUIK 8.5 and later
+
+## Based on
 Visual Controls For LUA (VCLua)
 
 version 0.5.0

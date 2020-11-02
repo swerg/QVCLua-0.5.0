@@ -22,8 +22,8 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="5"/>
-      <BuildNr Value="64"/>
-      <StringTable Comments="Based on VCLua library" FileDescription="Visual Component Library for QLua" LegalCopyright="Copyright (C) 2006,2014 Hi-Project Ltd., 2013,2020 QVCLua www.quik2dde.ru" OriginalFilename="qvcl.dll" ProductName="QVCLua" ProductVersion="0.5.0-rev.4 (beta3)"/>
+      <BuildNr Value="70"/>
+      <StringTable Comments="Based on VCLua library" FileDescription="Visual Component Library for QLua" LegalCopyright="Copyright (C) 2006,2014 Hi-Project Ltd., 2013,2020 QVCLua www.quik2dde.ru" OriginalFilename="qvcl.dll" ProductName="QVCLua" ProductVersion="0.5.0-rev.5"/>
     </VersionInfo>
     <BuildModes Count="2">
       <Item1 Name="Win32 (Lua5.1)" Default="True"/>
