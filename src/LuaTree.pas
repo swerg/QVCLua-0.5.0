@@ -32,7 +32,7 @@ procedure TreeNodeToTable(L:Plua_State; Index:Integer; Sender:TObject);
 
 implementation
 
-Uses Forms, SysUtils, Lua, LuaImageList, LuaProperties, fileutil, XMLRead;
+Uses Forms, SysUtils, Lua, LuaImageList, LuaProperties, fileutil, XMLRead, LConvEncoding;
 
 procedure lua_pushstring(L : Plua_State; const s : WideString); overload;
 begin
@@ -375,7 +375,9 @@ var
 begin
   CheckArg(L,2);
   lT := TLuaTreeView(GetLuaObject(L, 1));
-  lT.LoadFromFile(lua_tostring(L,2));
+  fn := lua_tostring(L,2);
+  fn := CP1251ToUTF8(fn);
+  lT.LoadFromFile(fn);
   Result := 0;
 end;
 

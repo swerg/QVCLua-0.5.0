@@ -442,7 +442,9 @@ var
 begin
   CheckArg(L,2);
   lStringGrid := TLuaStringGrid(GetLuaObject(L, 1));
-  lStringGrid.LoadFromFile(lua_tostring(L,2));
+  fn := lua_tostring(L,2);
+  fn := CP1251ToUTF8(fn);
+  lStringGrid.LoadFromFile(fn);
   lStringGrid.Refresh;
   Result := 0;
 end;

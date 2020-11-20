@@ -24,7 +24,7 @@ type
 
 implementation
 
-Uses LuaProperties, Lua, Dialogs, SysUtils, LuaForm, LCLClasses;
+Uses LuaProperties, Lua, Dialogs, SysUtils, LuaForm, LCLClasses, LConvEncoding;
 
 
 function TrayIconShow(L: Plua_State): Integer; cdecl;
@@ -69,6 +69,7 @@ begin
  Result := 0;
  Frm := TTrayIcon(GetLuaObject(L, 1));
  Str := lua_tostring(L,2);
+ Str := CP1251ToUTF8(Str);
  if (fileExists(Str)) then begin
       Frm.Icon.LoadFromFile(Str);
  end;

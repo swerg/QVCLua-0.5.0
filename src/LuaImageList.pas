@@ -23,7 +23,7 @@ type
 
 implementation
 
-Uses Forms, SysUtils, LuaProperties, Lua, LuaImage, Dialogs;
+Uses Forms, SysUtils, LuaProperties, Lua, LuaImage, Dialogs, LConvEncoding;
 
 // ************ IMAGELIST **************** //
 
@@ -43,6 +43,7 @@ begin
      while (lua_next(L, n) <> 0) do begin
          if (lua_isstring(L,-1)) then begin
             fname := lua_tostring(L,-1);
+            fname := CP1251ToUTF8(fname);
             img := TImage.Create(lImageList);
             img.Picture.LoadFromFile(fname);
             i := lImageList.Add(img.Picture.Bitmap,nil);
@@ -65,6 +66,7 @@ var
 begin
   lImageList := TLuaImageList(GetLuaObject(L, 1));
   fname := lua_tostring(L,2);
+  fname := CP1251ToUTF8(fname);
   try
     img := TImage.Create(lImageList);
     img.Picture.LoadFromFile(fname);

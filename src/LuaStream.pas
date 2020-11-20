@@ -22,17 +22,20 @@ type
 
 implementation
 
-Uses Lua, LuaProperties, TypInfo;
+Uses Lua, LuaProperties, TypInfo, LConvEncoding;
 
 // ************ STREAM ******************** //
 
 function LoadStreamFromFile(L: Plua_State): Integer; cdecl;
 var lStream:TLuaStream;
+  fname: String;
 begin
   CheckArg(L, 2);
   lStream := TLuaStream(GetLuaObject(L, 1));
   try
-      lStream.LoadFromFile(lua_tostring(L,2));
+      fname := lua_tostring(L,2);
+      fname := CP1251ToUTF8(fname);
+      lStream.LoadFromFile(fname);
       lStream.Position := 0;
       lua_pushnumber(L,lStream.Size);
   except

@@ -208,6 +208,7 @@ begin
   CheckArg(L,2);
   lSynEdit := TLuaSynEdit(GetLuaObject(L, 1));
   fn := lua_tostring(L, 2);
+  fn := CP1251ToUTF8(fn);
   lSynEdit.Lines.LoadFromFile(fn);
   result := 0;
 end;
@@ -369,6 +370,7 @@ begin
   CheckArg(L,2);
   HL := TSynCustomHighLighter(GetLuaObject(L, 1));
   fn := lua_tostring(L, 2);
+  fn := CP1251ToUTF8(fn);
   HL.LoadFromFile(fn);
   result := 0;
 end;

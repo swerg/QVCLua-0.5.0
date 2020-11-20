@@ -28,7 +28,7 @@ type
 
 implementation
 
-Uses Forms, SysUtils, LuaProperties, Lua, Dialogs;
+Uses Forms, SysUtils, LuaProperties, Lua, Dialogs, LConvEncoding;
 
 destructor TLuaImage.Destroy;
 begin
@@ -46,6 +46,7 @@ begin
   CheckArg(L, 2);
   lImage := TLuaImage(GetLuaObject(L, 1));
   fname := lua_tostring(L,2);
+  fname := CP1251ToUTF8(fname);
   ftype := ExtractFileExt(fname);
   try
       lImage.Picture.LoadFromFile(fname);
