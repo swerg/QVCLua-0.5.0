@@ -13,3 +13,4 @@ src/lua53/backup/*
 Lua-test/tmp/*
 lib/*
 bin/*
+.tmp/*
