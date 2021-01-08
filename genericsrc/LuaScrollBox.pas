@@ -2,7 +2,9 @@
 unit LuaScrollBox;	
 interface
 Uses Classes, Controls, StdCtrls, ComCtrls, ExtCtrls, FileCtrl, EditBtn, Buttons, Forms, Spin, ActnList, CheckLst, TypInfo,
-  {$IFDEF LUA53}
+  {$IF Defined(LUA54)}
+    Lua54
+  {$ELSEIF Defined(LUA53)}
     Lua53
   {$ELSE}
     LuaPas

@@ -5,6 +5,7 @@
 *.a
 *.o
 *.ppu
+*.zip
 backup/*
 src/backup/*
 src/lua51/backup/*

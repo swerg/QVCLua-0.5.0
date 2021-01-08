@@ -22,22 +22,22 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="5"/>
-      <BuildNr Value="80"/>
-      <StringTable Comments="Based on VCLua library" FileDescription="Visual Component Library for QLua" LegalCopyright="Copyright (C) 2006,2014 Hi-Project Ltd., 2013,2020 QVCLua www.quik2dde.ru" OriginalFilename="qvcl.dll" ProductName="QVCLua" ProductVersion="0.5.0-rev.5"/>
+      <BuildNr Value="84"/>
+      <StringTable Comments="Based on VCLua library" FileDescription="Visual Component Library for QLua" LegalCopyright="Copyright (C) 2006,2014 Hi-Project Ltd., 2013,2021 QVCLua www.quik2dde.ru" OriginalFilename="qvcl.dll" ProductName="QVCLua" ProductVersion="0.5.0-rev.6"/>
     </VersionInfo>
-    <BuildModes Count="2">
+    <BuildModes Count="3">
       <Item1 Name="Win32 (Lua5.1)" Default="True"/>
       <Item2 Name="Win64 (Lua5.3)">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="bin\$(TargetCPU)-$(TargetOS)\qvcl"/>
+            <Filename Value="bin\$(TargetCPU)-$(TargetOS)-Lua53\qvcl"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value=".;$(LazarusDir)\lcl\include;$(ProjOutDir)"/>
             <OtherUnitFiles Value="$(LazarusDir)\lcl\units\$(TargetCPU)-$(TargetOS);$(LazarusDir)\fpc\$(FPCVer)\units\$(TargetCPU)-$(TargetOS);$(LazarusDir)\lcl\units\$(TargetCPU)-$(TargetOS)\$(LCLWidgetType);$(LazarusDir)\components\lazutils\lib\$(TargetCPU)-$(TargetOS);$(LazarusDir)\components\rtticontrols;$(LazarusDir)\components\rtticontrols\lib\$(TargetCPU)-$(TargetOS)\win32;$(LazarusDir)\components\lazcontrols\lib\$(TargetCPU)-$(TargetOS)\win32;$(LazarusDir)\components\ideintf;src;genericsrc"/>
-            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)-Lua53"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -83,6 +83,62 @@
           </Other>
         </CompilerOptions>
       </Item2>
+      <Item3 Name="Win64 (Lua5.4)">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="bin\$(TargetCPU)-$(TargetOS)-Lua54\qvcl"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value=".;$(LazarusDir)\lcl\include;$(ProjOutDir)"/>
+            <OtherUnitFiles Value="$(LazarusDir)\lcl\units\$(TargetCPU)-$(TargetOS);$(LazarusDir)\fpc\$(FPCVer)\units\$(TargetCPU)-$(TargetOS);$(LazarusDir)\lcl\units\$(TargetCPU)-$(TargetOS)\$(LCLWidgetType);$(LazarusDir)\components\lazutils\lib\$(TargetCPU)-$(TargetOS);$(LazarusDir)\components\rtticontrols;$(LazarusDir)\components\rtticontrols\lib\$(TargetCPU)-$(TargetOS)\win32;$(LazarusDir)\components\lazcontrols\lib\$(TargetCPU)-$(TargetOS)\win32;$(LazarusDir)\components\ideintf;src;genericsrc"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)-Lua54"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+              <CStyleOperator Value="False"/>
+              <AllowLabel Value="False"/>
+              <CPPInline Value="False"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <RelocatableUnit Value="True"/>
+            <Checks>
+              <IOChecks Value="True"/>
+              <RangeChecks Value="True"/>
+              <OverflowChecks Value="True"/>
+              <StackChecks Value="True"/>
+            </Checks>
+            <TargetOS Value="win64"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <UseLineInfoUnit Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <Win32>
+                <GraphicApplication Value="True"/>
+              </Win32>
+              <ExecutableType Value="Library"/>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dLUA54"/>
+            <OtherDefines Count="1">
+              <Define0 Value="USEQLUA"/>
+            </OtherDefines>
+          </Other>
+        </CompilerOptions>
+      </Item3>
     </BuildModes>
     <PublishOptions>
       <Version Value="2"/>
@@ -424,7 +480,8 @@
       </Options>
     </Linking>
     <Other>
-      <CustomOptions Value="-dUSEQLUA"/>
+      <CustomOptions Value="-dUSEQLUA
+-dLUA51"/>
       <OtherDefines Count="1">
         <Define0 Value="USEQLUA"/>
       </OtherDefines>

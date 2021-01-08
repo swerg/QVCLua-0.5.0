@@ -1,5 +1,8 @@
 
-  {$IF Defined(LUA53)}
+  {$IF Defined(LUA54)}
+     Lua in 'src/lua53/Lua.pas',
+     Lua53 in 'src/lua54/lua54.pas',
+  {$ELSEIF Defined(LUA53)}
      Lua in 'src/lua53/Lua.pas',
      Lua53 in 'src/lua53/lua53.pas',
   {$ELSEIF Defined(LUA52)}

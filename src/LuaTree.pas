@@ -5,7 +5,9 @@ unit LuaTree;
 interface
 
 Uses LazUTF8,
-  {$IFDEF LUA53}
+  {$IF Defined(LUA54)}
+    Lua54
+  {$ELSEIF Defined(LUA53)}
     Lua53
   {$ELSE}
     LuaPas

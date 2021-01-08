@@ -3,7 +3,9 @@ unit LuaSynEdit;
 interface
 
 Uses Classes, Controls, Contnrs, Forms, ComCtrls, TypInfo,
-  {$IFDEF LUA53}
+  {$IF Defined(LUA54)}
+     Lua54,
+  {$ELSEIF Defined(LUA53)}
      Lua53,
   {$ELSE}
      LuaPas,

@@ -3,7 +3,9 @@ unit LuaActionList;
 interface
 
 Uses Classes, Controls, ComCtrls, ExtCtrls, Buttons, Forms, StdCtrls, Spin, ActnList, TypInfo,
-  {$IFDEF LUA53}
+  {$IF Defined(LUA54)}
+    Lua54
+  {$ELSEIF Defined(LUA53)}
     Lua53
   {$ELSE}
     LuaPas

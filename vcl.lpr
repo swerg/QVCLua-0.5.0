@@ -16,11 +16,11 @@ var
    FileVerInfo: TFileVersionInfo;
 begin
   // luaL_openlib is deprecated
-  {$IFDEF LUA53}
-     luaL_newlibtable(l, @vcl_lib);
-     luaL_setfuncs(l, @vcl_lib, 0);
+  {$IFDEF LUA51}
+    luaL_openlib(L, LUA_VCL_LIBNAME, @vcl_lib, 0);
   {$ELSE}
-     luaL_openlib(L, LUA_VCL_LIBNAME, @vcl_lib, 0);
+    luaL_newlibtable(l, @vcl_lib);
+    luaL_setfuncs(l, @vcl_lib, 0);
   {$ENDIF}
 
   FileVerInfo:=TFileVersionInfo.Create(nil);
@@ -31,7 +31,9 @@ begin
   lua_pushliteral (L, PChar(FileVerInfo.VersionStrings.Values['LegalCopyright']));
   lua_settable (L, -3);
   lua_pushliteral (L, '_DESCRIPTION');
-  {$IF Defined(LUA53)}
+  {$IF Defined(LUA54)}
+     lua_pushliteral (L, 'QVCLua Visual Controls for QLua in QUIK (Lua 5.4, Win64) based on VCLua');
+  {$ELSEIF Defined(LUA53)}
      lua_pushliteral (L, 'QVCLua Visual Controls for QLua in QUIK (Lua 5.3, Win64) based on VCLua');
   {$ELSEIF Defined(LUA52)}
      lua_pushliteral (L, 'QVCLua Visual Controls for QLua in QUIK (--) based on VCLua');

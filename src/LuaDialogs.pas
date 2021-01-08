@@ -3,7 +3,9 @@ unit LuaDialogs;
 interface
 
 Uses Controls, Dialogs, Sysutils,
-  {$IFDEF LUA53}
+  {$IF Defined(LUA54)}
+    Lua54
+  {$ELSEIF Defined(LUA53)}
     Lua53
   {$ELSE}
     LuaPas
