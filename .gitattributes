@@ -1,6 +1,9 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 
+*.pas	working-tree-encoding=CP1251	eol=CRLF
+*.cmd	working-tree-encoding=CP1251	eol=CRLF
+
 # Custom for Visual Studio
 *.cs     diff=csharp
 

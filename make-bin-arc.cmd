@@ -8,12 +8,12 @@ copy bin\x86_64-win64-Lua53\qvcl.dll .tmp\.zip\x64-Lua53
 copy bin\x86_64-win64-Lua54\qvcl.dll .tmp\.zip\x64-Lua54
 
 copy nul .tmp\.zip\ReadMe.txt
-echo Áèáëèîòåêà âèçóàëüíîãî èíòåðôåéñà QVcl äëÿ Lua â QUIK. >> .tmp\.zip\ReadMe.txt
-echo Ïîäðîáíîå îïèñàíèå: https://quik2dde.ru/viewtopic.php?id=111 >> .tmp\.zip\ReadMe.txt
+echo Ð‘Ð¸Ð±Ð»Ð¸Ð¾Ñ‚ÐµÐºÐ° Ð²Ð¸Ð·ÑƒÐ°Ð»ÑŒÐ½Ð¾Ð³Ð¾ Ð¸Ð½Ñ‚ÐµÑ€Ñ„ÐµÐ¹ÑÐ° QVcl Ð´Ð»Ñ Lua Ð² QUIK. >> .tmp\.zip\ReadMe.txt
+echo ÐŸÐ¾Ð´Ñ€Ð¾Ð±Ð½Ð¾Ðµ Ð¾Ð¿Ð¸ÑÐ°Ð½Ð¸Ðµ: https://quik2dde.ru/viewtopic.php?id=111 >> .tmp\.zip\ReadMe.txt
 echo. >> .tmp\.zip\ReadMe.txt
-echo \x32-Lua51  -- äëÿ QUIK 6.x, 7.x >> .tmp\.zip\ReadMe.txt
-echo \x64-Lua53  -- äëÿ QUIK 8.5 è äàëåå >> .tmp\.zip\ReadMe.txt
-echo \x64-Lua54  -- äëÿ QUIK 8.11 è äàëåå (â ñëó÷àå âûáîðà Lua 5.4 äëÿ âûïîëíåíèÿ ñêðèïòà) >> .tmp\.zip\ReadMe.txt
+echo \x32-Lua51  -- Ð´Ð»Ñ QUIK 6.x, 7.x >> .tmp\.zip\ReadMe.txt
+echo \x64-Lua53  -- Ð´Ð»Ñ QUIK 8.5 Ð¸ Ð´Ð°Ð»ÐµÐµ >> .tmp\.zip\ReadMe.txt
+echo \x64-Lua54  -- Ð´Ð»Ñ QUIK 8.11 Ð¸ Ð´Ð°Ð»ÐµÐµ (Ð² ÑÐ»ÑƒÑ‡Ð°Ðµ Ð²Ñ‹Ð±Ð¾Ñ€Ð° Lua 5.4 Ð´Ð»Ñ Ð²Ñ‹Ð¿Ð¾Ð»Ð½ÐµÐ½Ð¸Ñ ÑÐºÑ€Ð¸Ð¿Ñ‚Ð°) >> .tmp\.zip\ReadMe.txt
 
 cd .tmp\.zip
 "C:\Program Files\7-Zip\7z.exe" a -r -tZip ..\..\qvcl.zip *.dll ReadMe.txt
